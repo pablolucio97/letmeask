@@ -2,11 +2,16 @@ import {ButtonHTMLAttributes} from 'react'
 
 import './styles.scss'
 
-type ButtonDefaultProps = ButtonHTMLAttributes<HTMLButtonElement>
+type ButtonDefaultProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+    isOutilined?: boolean;
+}
 
-const Button = (props: ButtonDefaultProps) => {
+const Button = ({isOutilined = false, ...props}: ButtonDefaultProps) => {
     return (
-        <button className='button' {...props}/>
+        <button 
+        className={`button ${isOutilined? 'outlined' : ''}`}
+         {...props}
+        />
     )
 }
 
