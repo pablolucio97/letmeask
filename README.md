@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `yarn start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](https://60d67c11c6b1ce182e8a359c--pl-letmeask.netlify.app/) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
