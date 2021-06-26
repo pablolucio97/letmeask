@@ -1,6 +1,7 @@
 
 import { ReactNode } from 'react'
 import './styles.scss'
+import ClassNames from 'classnames'
 
 type QuestionsProps = {
     content: string;
@@ -9,11 +10,21 @@ type QuestionsProps = {
         avatar: string
     };
     children?: ReactNode;
+    isAnswered?: boolean;
 }
 
-const Question = ({author, content, children}: QuestionsProps) => {
+const Question = ({
+    author,
+    content,
+    children,
+    isAnswered = false,
+}: QuestionsProps) => {
     return (
-        <div className="question">
+        <div className={
+            ClassNames(
+                'question',
+                {answered : isAnswered},
+            )}>
             <p>{content}</p>
             <footer>
                 <div className="user-info">

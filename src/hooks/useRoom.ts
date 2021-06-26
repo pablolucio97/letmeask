@@ -1,74 +1,80 @@
-import { useEffect, useState } from "react"
-import { database } from "../services/firebase"
-import { useAuth } from "./useAuth"
-
+import { useEffect, useState } from "react";
+import { database } from "../services/firebase";
+import { useAuth } from "./useAuth";
 
 type Question = {
-    id: string;
-    author: {
-        name: string;
-        avatar: string;
-    },
-    content: string;
-    isAnswered: boolean;
-    isHighlighted: boolean;
-    likeCount: number;
-    likeId: string | undefined;
-}
+  id: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  content: string;
+  isAnswered: boolean;
+  isHighlighted: boolean;
+  likeCount: number;
+  likeId: string | undefined;
+};
 
-
-type FirebaseQuestions = Record<string, {
-    
+type FirebaseQuestions = Record<
+  string,
+  {
     author: {
-        name: string;
-        avatar: string;
-    },
+      name: string;
+      avatar: string;
+    };
     content: string;
     isAnswered: boolean;
     isHighLighted: boolean;
-    likes: Record<string, {
+    likes: Record<
+      string,
+      {
         authorId: string;
-    }>
-
-}>
-
+      }
+    >;
+  }
+>;
 
 const useRoom = (roomId: string) => {
-    
-    const [questions, setQuestions] = useState<Question[]>([])
-    const [classTitle, setClassTitle] = useState('')
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [classTitle, setClassTitle] = useState("");
 
-    const {user} = useAuth()
+  const { user } = useAuth();
 
-    useEffect(() => {
+  useEffect(() => {
+    const roomRef = database.ref(`/rooms/${roomId}`);
 
-        const roomRef = database.ref(`/rooms/${roomId}`)
-
-        roomRef.on('value', room => {
-            const databaseRoom = room.val();
-            const firebaseQuestions : FirebaseQuestions = databaseRoom.questions ?? {}
-            const parsedQuestions = Object.entries(firebaseQuestions).map( ([key, value]) => {
-                return {
-                    id: key,
-                    content: value.content,
-                    author: value.author,
-                    isAnswered: value.isAnswered,
-                    isHighlighted: value.isHighLighted,
-                    likeCount: Object.values(value.likes ?? {}).length,
-                    likeId: Object.entries(value.likes?? {}).find(([key, value]) => value.authorId === user?.id)?.[0]
-                }
-            })
-            setQuestions(parsedQuestions)
-            setClassTitle(databaseRoom.title)
+    roomRef.on("value", (room) => {
+      const databaseRoom = room.val();
+      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+      const parsedQuestions = Object.entries(firebaseQuestions)
+        .map(([key, value]) => {
+          return {
+            id: key,
+            content: value.content,
+            author: value.author,
+            isAnswered: value.isAnswered,
+            isHighlighted: value.isHighLighted,
+            likeCount: Object.values(value.likes ?? {}).length,
+            likeId: Object.entries(value.likes ?? {}).find(
+              ([key, value]) => value.authorId === user?.id
+            )?.[0],
+          };
         })
+        .sort((a, b) => {
+          if (a.likeCount > b.likeCount) return -1;
+          if (a.likeCount < b.likeCount) return 1;
+          return 0;
+        });
+      setQuestions(parsedQuestions);
+      setClassTitle(databaseRoom.title);
+    });
 
-        return () => {roomRef.off('value')}
+    return () => {
+      roomRef.off("value");
+    };
+  }, [roomId, user?.id]);
 
+  return { questions, classTitle };
+};
 
-    }, [roomId, user?.id])
-
-    return {questions, classTitle}
-
-}
-
-export {useRoom}
+export { useRoom };

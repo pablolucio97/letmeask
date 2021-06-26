@@ -58,7 +58,7 @@ const NewRoom = () => {
                         <Button type="submit">Criar sala</Button>
                     </form>
                     <p>Quer entrar em uma sala existente?
-                        <Link to="/" style={{ textDecoration: 'none' }}>Clique aqui.</Link>
+                        <Link to="/" style={{ textDecoration: 'none' }}> Clique aqui.</Link>
                     </p>
                 </div>
             </main>

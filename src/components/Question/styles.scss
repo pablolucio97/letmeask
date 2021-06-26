@@ -1,63 +1,81 @@
-.question{
+.question {
   background: #fefefe;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   padding: 24px;
-  width: 720px;
+  width: 764px;
+  margin: -1rem 0 1rem;
 
-  & + .question{
-      margin-top: 8px;
+  &.highlighted {
+    background: #f4f0ff;
+    border: 1px solid #835afd;
+
+    footer .user-info span {
+      color: #2e2e2e;
+    }
   }
 
-  p{
-      color: #29292e;
+  &.answered {
+    background: #d8dcdd;
   }
 
-  footer{
+  @media (max-width: 1080px) {
+    width: 580px;
+  }
+
+  @media (max-width: 720px) {
+    width: 320px;
+    margin: 0 auto;
+  }
+
+  p {
+    color: #29292e;
+    word-break: break-all;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+
+    .user-info {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-top: 24px;
 
-    .user-info{
-        display: flex;
-        align-items: center;
-
-        img{
+      img {
         width: 32px;
         height: 32px;
         border-radius: 100%;
-        }
+      }
 
-        span{
+      span {
         margin-left: 8px;
         color: #737380;
         font-size: 14px;
-        }
+      }
     }
 
-    button{
+    button {
       border: 0;
       background: transparent;
       cursor: pointer;
 
-      &.like-button{
+      &.like-button {
         display: flex;
         align-items: flex-end;
         color: #737380;
         gap: 8px;
       }
 
-      &.liked{
+      &.liked {
         color: #835afd;
 
-        svg path{
+        svg path {
           stroke: #835afd;
         }
-
       }
-
     }
-
   }
 }
+

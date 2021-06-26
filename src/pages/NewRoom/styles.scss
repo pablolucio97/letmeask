@@ -31,10 +31,10 @@ aside {
   }
 }
 
-h2{
-    font-size: 24px;
-    margin: 64px 0 24px;
-    font-family: 'Poppins', sans-serif;
+h2 {
+  font-size: 24px;
+  margin: 64px 0 24px;
+  font-family: "Poppins", sans-serif;
 }
 
 p {
@@ -47,6 +47,10 @@ p {
     text-decoration: none;
     color: #ee00e0;
   }
+
+  @media (max-width: 1080px) {
+    margin-bottom: 2rem;
+  }
 }
 
 .main-content {
@@ -57,7 +61,7 @@ p {
   align-items: stretch;
   text-align: center;
 
-  h1{
+  h1 {
     color: #222;
   }
 
